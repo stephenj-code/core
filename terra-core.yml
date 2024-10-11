@@ -1,0 +1,29 @@
+packer {
+  source "amazon-ebs" "rhel8" {
+    ami_name      = "rhel8-ami-{{timestamp}}"
+    instance_type = "t2.micro"
+    region        = "us-west-2"
+    source_ami_filter {
+      filters = {
+        name                = "RHEL-8.*_HVM-*-x86_64-*"
+        root-device-type    = "ebs"
+        virtualization-type = "hvm"
+      }
+      most_recent = true
+      owners      = ["309956199498"] # Red Hat's AWS account ID
+    }
+    ssh_username = "ec2-user"
+  }
+
+  build {
+    sources = ["source.amazon-ebs.rhel8"]
+
+    provisioner "shell" {
+      inline = [
+        "sudo yum update -y",
+        "sudo yum install -y httpd",
+        "sudo systemctl enable httpd",
+      ]
+    }
+  }
+}
