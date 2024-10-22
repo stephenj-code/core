@@ -40,6 +40,7 @@ resource "aws_instance" "public-instance-01" {
   ami           = "ami-050cd642fd83388e4" # Replace with the actual AMI ID for your region
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public-subnet.id
+  key_name      = "bastion-ssh.pem"
 
   tags = {
     Name       = "public-instance-01"
@@ -52,6 +53,7 @@ resource "aws_instance" "private-instance-01" {
   ami           = "ami-050cd642fd83388e4" # Replace with the actual AMI ID for your region
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.private-subnet.id
+  key_name      = "bastion-ssh.pem"
 
   tags = {
     Name       = "private-instance-01"
