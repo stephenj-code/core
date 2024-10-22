@@ -2,25 +2,19 @@
 resource "aws_vpc" "main-vpc" {
   cidr_block = "20.24.0.0/16"
 
-  tags = merge(
-    {
-      Name = "main-vpc"
-    },
-    var.tags
-  )
+  tags = {
+    Name = "main-vpc"
+  }
 }
 
 resource "aws_subnet" "private-subnet" {
   vpc_id                  = aws_vpc.main-vpc.id
   cidr_block              = "20.24.0.0/24"
   map_public_ip_on_launch = false
-
-  tags = merge(
-    {
-      Name = "private-subnet"
-    },
-    var.tags
-  )
+  
+  tags = {
+    Name = "private-subnet"
+  }
 }
 
 resource "aws_subnet" "public-subnet" {
@@ -28,38 +22,29 @@ resource "aws_subnet" "public-subnet" {
   cidr_block              = "20.24.1.0/24"
   map_public_ip_on_launch = true
 
-  tags = merge(
-    {
-      Name = "public-subnet"
-    },
-    var.tags
-  )
+  tags = {
+    Name = "public-subnet"
+  }
 }
 
 resource "aws_instance" "public-instance-01" {
   ami           = "ami-050cd642fd83388e4" # Replace with the actual AMI ID for your region
-  instance_type = var.inst_type
+  instance_type = var.instance_type
   subnet_id     = aws_subnet.public-subnet.id
   key_name      = "bastion-ssh"
 
-  tags = merge(
-    {
-      Name = "public-instance-01"
-    },
-    var.tags
-  )
+  tags = {
+    Name = "public-instance-01"
+  }
 }
 
 resource "aws_instance" "private-instance-01" {
   ami           = "ami-050cd642fd83388e4" # Replace with the actual AMI ID for your region
-  instance_type = var.inst_type
+  instance_type = var.instance_type
   subnet_id     = aws_subnet.private-subnet.id
   key_name      = "bastion-ssh"
 
-  tags = merge(
-    {
-      Name = "private-instance-01"
-    },
-    var.tags
-  )
+  tags = {
+    Name = "private-instance-01"
+  } 
 }
