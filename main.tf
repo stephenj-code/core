@@ -27,6 +27,6 @@ resource "aws_instance" "inst-01" {
   subnet_id     = aws_subnet.main-subnet.id
 
   tags = {
-    Name = "inst-01"
+    Name = "inst-00"
   }
 }
