@@ -2,6 +2,12 @@ locals {
   current_date = formatdate("YYYY-MM-DD", timestamp())
 }
 
+resource "aws_key_pair" "bastion_ssh" {
+  key_name   = "bastion-ssh"
+  public_key = file("C:\Atfou\aws\bastion-ssh.pub") # Path to your public key file
+}
+
+
 resource "aws_vpc" "main-vpc" {
   cidr_block = "20.24.0.0/16"
 
@@ -40,7 +46,7 @@ resource "aws_instance" "public-instance-01" {
   ami           = "ami-050cd642fd83388e4" # Replace with the actual AMI ID for your region
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public-subnet.id
-  key_name      = "bastion-ssh.pem"
+  key_name      = "bastion-ssh"
 
   tags = {
     Name       = "public-instance-01"
@@ -53,7 +59,7 @@ resource "aws_instance" "private-instance-01" {
   ami           = "ami-050cd642fd83388e4" # Replace with the actual AMI ID for your region
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.private-subnet.id
-  key_name      = "bastion-ssh.pem"
+  key_name      = "bastion-ssh"
 
   tags = {
     Name       = "private-instance-01"
