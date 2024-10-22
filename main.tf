@@ -1,8 +1,4 @@
-locals {
-  current_date = formatdate("YYYY-MM-DD", timestamp())
-}
-
-
+#core infrastructure
 resource "aws_vpc" "main-vpc" {
   cidr_block = "20.24.0.0/16"
 
