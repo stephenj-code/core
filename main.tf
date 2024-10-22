@@ -6,11 +6,12 @@ locals {
 resource "aws_vpc" "main-vpc" {
   cidr_block = "20.24.0.0/16"
 
-  tags = {
-    Name       = "main-vpc"
-    CreateDate = local.current_date
-    CreatedBy  = "Terraform"
-  }
+  tags = merge(
+    {
+      Name = "main-vpc"
+    },
+    var.tags
+  )
 }
 
 resource "aws_subnet" "private-subnet" {
@@ -18,11 +19,12 @@ resource "aws_subnet" "private-subnet" {
   cidr_block              = "20.24.0.0/24"
   map_public_ip_on_launch = false
 
-  tags = {
-    Name       = "private-subnet"
-    CreateDate = local.current_date
-    CreatedBy  = "Terraform"
-  }
+  tags = merge(
+    {
+      Name = "private-subnet"
+    },
+    var.tags
+  )
 }
 
 resource "aws_subnet" "public-subnet" {
@@ -30,11 +32,12 @@ resource "aws_subnet" "public-subnet" {
   cidr_block              = "20.24.1.0/24"
   map_public_ip_on_launch = true
 
-  tags = {
-    Name       = "public-subnet"
-    CreateDate = local.current_date
-    CreatedBy  = "Terraform"
-  }
+  tags = merge(
+    {
+      Name = "public-subnet"
+    },
+    var.tags
+  )
 }
 
 resource "aws_instance" "public-instance-01" {
@@ -43,11 +46,12 @@ resource "aws_instance" "public-instance-01" {
   subnet_id     = aws_subnet.public-subnet.id
   key_name      = "bastion-ssh"
 
-  tags = {
-    Name       = "public-instance-01"
-    CreateDate = local.current_date
-    CreatedBy  = "Terraform"
-  }
+  tags = merge(
+    {
+      Name = "public-instance-01"
+    },
+    var.tags
+  )
 }
 
 resource "aws_instance" "private-instance-01" {
@@ -56,9 +60,10 @@ resource "aws_instance" "private-instance-01" {
   subnet_id     = aws_subnet.private-subnet.id
   key_name      = "bastion-ssh"
 
-  tags = {
-    Name       = "private-instance-01"
-    CreateDate = local.current_date
-    CreatedBy  = "Terraform"
-  }
+  tags = merge(
+    {
+      Name = "private-instance-01"
+    },
+    var.tags
+  )
 }
