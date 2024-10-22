@@ -17,14 +17,14 @@ resource "aws_subnet" "public-subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "main-subnet"
+    Name = "public-subnet"
   }
 }
 
-resource "aws_instance" "inst-01" {
+resource "aws_instance" "inst-00" {
   ami           = "ami-050cd642fd83388e4" # Replace with the actual AMI ID for your region
   instance_type = "t2.micro"
-  subnet_id     = aws_subnet.main-subnet.id
+  subnet_id     = aws_subnet.public-subnet.id
 
   tags = {
     Name = "inst-00"
