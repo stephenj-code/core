@@ -2,11 +2,6 @@ locals {
   current_date = formatdate("YYYY-MM-DD", timestamp())
 }
 
-resource "aws_key_pair" "bastion_ssh" {
-  key_name   = "bastion-ssh"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgi3D91XGebEMLzMJZfM5RHbZykyDt3XAbrL1YUB+v2O++YCYitf+XlGqXX4QrSt+vaxD7CNSSa4nKw7508MShwBBkiQp8ZAP7L7DIFKmQUdw4Z09eiRK+DzoEFv5/DR9ZzBp+u0Mh0THafKM4Gi8ZJSfx9ee0wZ6YriKb6NyXAH2Tdcbi4ie7VdWSfDs5Y0z9B+AmsK1ZuekgbEv3OlmQeX06D4h+WY8sZXz2yl+ZkvhaMSR4VunmR43bLJRAEGf2rvE4taWDJPaWKcL89bkwFhMRpUwgVP+3vn2q08eJY7AjnDbSeKfzzlHU8O2L+VvAVrpkdqMlLvVgmBQ7XNhN" # Path to your public key file
-}
-
 
 resource "aws_vpc" "main-vpc" {
   cidr_block = "20.24.0.0/16"
