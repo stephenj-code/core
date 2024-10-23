@@ -1,9 +1,15 @@
-#core infrastructure
+# main.tf
+
+provider "aws" {
+  region = "us-east-2"
+}
+
 resource "aws_vpc" "main-vpc" {
   cidr_block = "20.24.0.0/16"
 
   tags = {
-    Name = "main-vpc"
+    Name       = "main-vpc"
+    CreatedBy  = "Terraform"
   }
 }
 
@@ -11,9 +17,10 @@ resource "aws_subnet" "private-subnet" {
   vpc_id                  = aws_vpc.main-vpc.id
   cidr_block              = "20.24.0.0/24"
   map_public_ip_on_launch = false
-  
+
   tags = {
-    Name = "private-subnet"
+    Name       = "private-subnet"
+    CreatedBy  = "Terraform"
   }
 }
 
@@ -23,28 +30,32 @@ resource "aws_subnet" "public-subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "public-subnet"
+    Name       = "public-subnet"
+    CreatedBy  = "Terraform"
   }
 }
 
+
 resource "aws_instance" "public-instance-01" {
   ami           = "ami-050cd642fd83388e4" # Replace with the actual AMI ID for your region
-  instance_type = var.instance_type
+  instance_type = "t2.micro"
   subnet_id     = aws_subnet.public-subnet.id
   key_name      = "bastion-ssh"
 
   tags = {
-    Name = "public-instance-01"
+    Name       = "public-instance-01"
+    CreatedBy  = "Terraform"
   }
 }
 
 resource "aws_instance" "private-instance-01" {
   ami           = "ami-050cd642fd83388e4" # Replace with the actual AMI ID for your region
-  instance_type = var.instance_type
+  instance_type = "t2.micro"
   subnet_id     = aws_subnet.private-subnet.id
   key_name      = "bastion-ssh"
 
   tags = {
-    Name = "private-instance-01"
-  } 
+    Name       = "private-instance-01"
+    CreatedBy  = "Terraform"
+  }
 }
