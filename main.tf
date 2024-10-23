@@ -164,14 +164,14 @@ resource "aws_instance" "public-instance-01" {
   associate_public_ip_address = true
 
   user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update -y
-              sudo yum install httpd -y
-              sudo systemctl start httpd
-              sudo systemctl enable httpd
-              echo "<h1>Welcome to the public instance</h1>" | sudo tee /var/www/html/index.html
-              EOF
-
+    #!/bin/bash
+    apt-get update
+    apt-get install -y nginx
+    echo "<h1>Hello, World from NGINX!</h1>" > /var/www/html/index.html
+    systemctl start nginx
+    systemctl enable nginx
+    EOF
+    
   tags = {
     Name       = "public-instance-01"
     CreatedBy  = "Terraform"
