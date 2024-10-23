@@ -101,7 +101,30 @@ resource "aws_route_table_association" "private-subnet-association" {
   route_table_id = aws_route_table.private-route-table.id
 }
 
+resource "aws_security_group" "http-sg" {
+  name        = "http-sg"
+  description = "Allow HTTP traffic"
+  vpc_id      = aws_vpc.main-vpc.id
 
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name       = "http-sg"
+    CreatedBy  = "Terraform"
+  }
+}
 
 resource "aws_security_group" "ssh-sg" {
   name        = "ssh-sg"
@@ -134,7 +157,10 @@ resource "aws_instance" "public-instance-01" {
   instance_type = var.instance_type
   subnet_id     = aws_subnet.public-subnet.id
   key_name      = "bastion-ssh"
-  vpc_security_group_ids = [aws_security_group.ssh-sg.id]
+  vpc_security_group_ids = [
+    aws_security_group.http-sg.id,
+    aws_security_group.ssh-sg.id
+  ]
   associate_public_ip_address = true
 
   tags = {
