@@ -5,7 +5,7 @@ provider "aws" {
 }
 
 resource "aws_vpc" "main-vpc" {
-  cidr_block = "20.24.0.0/16"
+  cidr_block = var.vpc_cidr_block
 
   tags = {
     Name       = "main-vpc"
@@ -15,7 +15,7 @@ resource "aws_vpc" "main-vpc" {
 
 resource "aws_subnet" "private-subnet" {
   vpc_id                  = aws_vpc.main-vpc.id
-  cidr_block              = "20.24.0.0/24"
+  cidr_block              = cidrsubnet(aws_vpc.main-vpc.cidr_block, 8, 0)
   map_public_ip_on_launch = false
 
   tags = {
@@ -26,7 +26,7 @@ resource "aws_subnet" "private-subnet" {
 
 resource "aws_subnet" "public-subnet" {
   vpc_id                  = aws_vpc.main-vpc.id
-  cidr_block              = "20.24.1.0/24"
+  cidr_block              = cidrsubnet(aws_vpc.main-vpc.cidr_block, 8, 1)
   map_public_ip_on_launch = true
 
   tags = {

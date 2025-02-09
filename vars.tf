@@ -10,3 +10,8 @@ variable "ami_id" {
   default     = "ami-050cd642fd83388e4"
 }
 
+variable "vpc_cidr_block" {
+  description = "The CIDR block for the VPC"
+  type        = string
+  default     = "20.25.0.0/16"
+}
