@@ -15,3 +15,5 @@ variable "vpc_cidr_block" {
   type        = string
   default     = "20.25.0.0/16"
 }
+
+ 
