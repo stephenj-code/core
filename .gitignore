@@ -23,3 +23,34 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Python monitoring system
+monitoring/__pycache__/
+monitoring/**/__pycache__/
+monitoring/*.pyc
+monitoring/**/*.pyc
+monitoring/.pytest_cache/
+monitoring/**/.pytest_cache/
+monitoring/venv/
+monitoring/env/
+monitoring/.env
+monitoring/**/.env
+monitoring/*.log
+monitoring/**/*.log
+monitoring/monitoring_config.yaml
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
