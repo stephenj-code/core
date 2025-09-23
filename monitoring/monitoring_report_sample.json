@@ -1,0 +1,55 @@
+{
+  "timestamp": "2025-09-23T02:19:27.890084",
+  "system_health": {
+    "status": "unhealthy",
+    "timestamp": "2025-09-23T02:19:27.889591",
+    "checks": {
+      "database": {
+        "status": "fail",
+        "timestamp": "2025-09-23T02:19:27.889571"
+      },
+      "external_api": {
+        "status": "pass",
+        "timestamp": "2025-09-23T02:19:27.889588"
+      }
+    }
+  },
+  "metrics_summary": {
+    "total_requests": 10,
+    "active_connections": 50,
+    "avg_response_time": 150.0
+  },
+  "alerts_summary": {
+    "total_alerts_sent": 4,
+    "recent_alerts": [
+      {
+        "id": "alert-1",
+        "title": "Service Health Degraded",
+        "description": "One or more health checks failed on cycle 2",
+        "severity": "medium",
+        "timestamp": "2025-09-23T02:19:24.888405"
+      },
+      {
+        "id": "alert-2",
+        "title": "Service Health Degraded",
+        "description": "One or more health checks failed on cycle 4",
+        "severity": "medium",
+        "timestamp": "2025-09-23T02:19:26.889260"
+      },
+      {
+        "id": "alert-3",
+        "title": "High Response Time",
+        "description": "Average response time exceeded 200ms threshold",
+        "severity": "high",
+        "timestamp": "2025-09-23T02:19:26.889326"
+      },
+      {
+        "id": "alert-4",
+        "title": "Service Health Degraded",
+        "description": "One or more health checks failed on cycle 5",
+        "severity": "medium",
+        "timestamp": "2025-09-23T02:19:27.889775"
+      }
+    ]
+  }
+}

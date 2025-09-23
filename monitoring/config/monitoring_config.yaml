@@ -1,0 +1,79 @@
+# Default monitoring configuration
+services:
+  - name: "api-server"
+    health_check_url: "http://localhost:5000/health"
+    expected_status: 200
+    timeout: 5
+    critical: true
+    tags:
+      team: "backend"
+      environment: "production"
+  
+  - name: "database"
+    health_check_url: "http://localhost:5432/health"
+    expected_status: 200
+    timeout: 10
+    critical: true
+    tags:
+      team: "infrastructure"
+      environment: "production"
+
+alerting:
+  enabled: true
+  cooldown_minutes: 15
+  channels:
+    - type: "slack"
+      webhook_url: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+      channel: "#alerts"
+      username: "MonitoringBot"
+    
+    - type: "email"
+      smtp_server: "smtp.gmail.com"
+      smtp_port: 587
+      from_email: "alerts@yourcompany.com"
+      to_emails:
+        - "team@yourcompany.com"
+        - "oncall@yourcompany.com"
+      use_tls: true
+    
+    - type: "webhook"
+      url: "https://api.pagerduty.com/incidents"
+      method: "POST"
+      headers:
+        Authorization: "Token token=YOUR_PAGERDUTY_TOKEN"
+        Content-Type: "application/json"
+  
+  thresholds:
+    cpu_percent: 80.0
+    memory_percent: 85.0
+    disk_percent: 90.0
+    response_time_ms: 5000.0
+    error_rate_percent: 5.0
+
+metrics:
+  enabled: true
+  port: 8000
+  interval_seconds: 30
+  backends:
+    - type: "prometheus"
+      port: 8000
+    
+    - type: "elasticsearch"
+      url: "http://localhost:9200"
+      index_pattern: "metrics-{date}"
+    
+    - type: "influxdb"
+      url: "http://localhost:8086"
+      token: "YOUR_INFLUXDB_TOKEN"
+      org: "your-organization"
+      bucket: "monitoring"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_path: "/var/log/monitoring.log"
+  max_size_mb: 100
+  backup_count: 5
+
+environment: "production"
+region: "us-east-1"
